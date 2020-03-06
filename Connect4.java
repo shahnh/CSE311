@@ -20,6 +20,7 @@ public class Connect4 {
 		}
 	}
 	
+	
 	public static void main(String[] args) {
 		Scanner scan = new Scanner(System.in);
 		Grid grid = new Grid();
