@@ -100,11 +100,86 @@ public class MyGridLayout {
 			if(Controler.turnP == 'R') {
 				rect[cord[0]][cord[1]].setBackground(Color.RED);
 				Controler.turnP = 'Y';
+				if(checkWin(Color.RED)) { 
+					victory("Red");
+					
+				}
 			}
 			else {
 				rect[cord[0]][cord[1]].setBackground(Color.YELLOW);
 				Controler.turnP = 'R';
+				if(checkWin(Color.YELLOW)) {
+					victory("Yellow");
+				}
 			}
 		}
 	}
+	
+	//returns true if any row has 4 in a row
+	private boolean checkRows(Color symbol) {
+		for(int row = 0; row < rect.length; row++) {
+			int wincount = 0;
+			for(int col = 0; col < rect[row].length; col++) {
+				if(rect[row][col].getBackground() == symbol)
+					wincount++;
+				else
+					wincount = 0;
+				if(wincount == 4)
+					return true;
+			}
+		}
+		return false;
+	}
+	
+	//returns true if any column has 4 in a row
+	private boolean checkCols(Color symbol) {
+		for(int col = 0; col < rect[0].length; col++) {
+			int wincount = 0;
+			for(int row = 0; row < rect.length; row++) {
+				if(rect[row][col].getBackground() == symbol)
+					wincount++;
+				else
+					wincount = 0;
+				if(wincount == 4)
+					return true;
+			}
+		}
+		return false;
+	}
+	
+	private boolean checkDiag(Color symbol) {
+		for(int row = 3; row < rect.length; row++){
+			for(int col = 0; col < rect[0].length - 3; col++){
+				if (rect[row][col].getBackground() == symbol   && 
+					rect[row-1][col+1].getBackground() == symbol &&
+					rect[row-2][col+2].getBackground() == symbol &&
+					rect[row-3][col+3].getBackground() == symbol){
+					return true;
+				}
+			}
+		}
+		
+		for(int row = 0; row < rect.length - 3; row++){
+			for(int col = 0; col < rect[0].length - 3; col++){
+				if (rect[row][col].getBackground() == symbol   && 
+					rect[row+1][col+1].getBackground() == symbol &&
+					rect[row+2][col+2].getBackground() == symbol &&
+					rect[row+3][col+3].getBackground() == symbol){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	public boolean checkWin(Color symbol) {
+		return (checkRows(symbol) || checkCols(symbol) || checkDiag(symbol));
+	}
+	
+	public void victory(String currentPlayer) {
+        String winner = currentPlayer + " wins.\nThanks for playing!";
+        int n = JOptionPane.showConfirmDialog(null, winner, "Victory!", JOptionPane.DEFAULT_OPTION); //(f,winner)
+        f.dispose();
+    }
+	
 }
