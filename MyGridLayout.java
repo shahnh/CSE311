@@ -52,12 +52,20 @@ public class MyGridLayout {
 				if(model.checkWin(Color.RED, labelArray)) { 
 					victory("Red");
 				}
+				if (model.isFull(labelArray)) {
+					int n = JOptionPane.showConfirmDialog(null, "It is tie. Play again", "Tie", JOptionPane.DEFAULT_OPTION); //(f,winner)
+					frame.dispose();
+				}
 			}
 			else {
 				labelArray[cord[0]][cord[1]].setBackground(Color.YELLOW);
 				Controler.turnP = 'R';
 				if(model.checkWin(Color.YELLOW, labelArray)) {
 					victory("Yellow");
+				}
+				if (model.isFull(labelArray)) {
+					int n = JOptionPane.showConfirmDialog(null, "It is tie. Play again", "Tie", JOptionPane.DEFAULT_OPTION); //(f,winner)
+					frame.dispose();
 				}
 			}
 		}
