@@ -13,6 +13,7 @@ public class MyGridLayout {
 	Grid grid;
 	Model model;
 	
+	// Initialize Grid that is 6x7 using JLabel, Model, JFrame, JPanel, and JButtons
 	public MyGridLayout(){
 		grid = new Grid();  
 		model = new Model(grid);
@@ -34,6 +35,7 @@ public class MyGridLayout {
 		actionButton(6);
 	}
 	
+	//calls update method upon clicking a button 
 	public void actionButton(int i) {
 		buttonArray[i].addActionListener(new ActionListener() {
 			@Override
@@ -42,7 +44,8 @@ public class MyGridLayout {
 			}
 		});
 	}
-
+	
+	//updates the grid's color and changes the player.
 	public void update(int col) {
 		int[] cord = model.getPosition(col);
 		if(model.add(Controler.turnP, col+1)) {
@@ -52,10 +55,7 @@ public class MyGridLayout {
 				if(model.checkWin(Color.RED, labelArray)) { 
 					victory("Red");
 				}
-				if (model.isFull(labelArray)) {
-					int n = JOptionPane.showConfirmDialog(null, "It is tie. Play again", "Tie", JOptionPane.DEFAULT_OPTION); //(f,winner)
-					frame.dispose();
-				}
+				checkTie();
 			}
 			else {
 				labelArray[cord[0]][cord[1]].setBackground(Color.YELLOW);
@@ -63,14 +63,12 @@ public class MyGridLayout {
 				if(model.checkWin(Color.YELLOW, labelArray)) {
 					victory("Yellow");
 				}
-				if (model.isFull(labelArray)) {
-					int n = JOptionPane.showConfirmDialog(null, "It is tie. Play again", "Tie", JOptionPane.DEFAULT_OPTION); //(f,winner)
-					frame.dispose();
-				}
+				checkTie();
 			}
 		}
 	}
 
+	//Creates a 6x7 grid using JLabel 2d array
 	public void createLabel() {
 		int y = 250;
 		labelArray = new JLabel[row][column];
@@ -89,6 +87,7 @@ public class MyGridLayout {
 		}
 	}
 	
+	//creates a array of 7 JButton and adding to the frame
 	public void createButton() {
 		buttonArray = new JButton[column];
 		for (int j = 0; j < column; j++) {
@@ -99,6 +98,15 @@ public class MyGridLayout {
 		}
 	}
 
+	//displays a tie massage.
+	public void checkTie() {
+		if (model.isFull(labelArray)) {
+			int n = JOptionPane.showConfirmDialog(null, "It is tie. Play again", "Tie", JOptionPane.DEFAULT_OPTION); //(if ties quit)
+			frame.dispose();
+		}
+	}
+	
+	//displays a window if a player wins
 	public void victory(String currentPlayer) {
 		String winner = currentPlayer + " wins.\nThanks for playing!";
 		int n = JOptionPane.showConfirmDialog(null, winner, "Victory!", JOptionPane.DEFAULT_OPTION); //(f,winner)

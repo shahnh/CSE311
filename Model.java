@@ -8,7 +8,8 @@ public class Model {
 	public Model(Grid grid) {
 		this.body = grid.body;
 	}
-		
+	
+	//Checks if there is a empty shell in given column
 	public int[] getPosition(int col) {
 		int[] result = {-1, -1};
 		for(int i = 0; i < body.length; i++) {
@@ -21,6 +22,7 @@ public class Model {
 		return result;
 	}
 	
+	//adds user turn after calling getPosition for textbase
 	public boolean add(char player, int col) {
 		int[] cord = getPosition(col-1);
 		if(cord[0] != -1 && cord[1] != -1) {
@@ -30,7 +32,7 @@ public class Model {
 		return false;
 	}
 
-	//returns true if any row has 4 in a row
+	//returns true if any row has 4 in a row for textbase
 	private boolean checkRows(char symbol) {
 		for(int row = 0; row < body.length; row++) {
 			int wincount = 0;
@@ -46,7 +48,7 @@ public class Model {
 		return false;
 	}
 	
-	//returns true if any row has 4 in a row
+	//returns true if any row has 4 in a row for GUI
 	private boolean checkRows(Color symbol, JLabel[][] labelArray) {
 		for(int row = 0; row < labelArray.length; row++) {
 			int wincount = 0;
@@ -62,7 +64,7 @@ public class Model {
 		return false;
 	}
 	
-	//returns true if any column has 4 in a row
+	//returns true if any column has 4 in a row for textbase
 	private boolean checkCols(char symbol) {
 		for(int col = 0; col < body[0].length; col++) {
 			int wincount = 0;
@@ -78,7 +80,7 @@ public class Model {
 		return false;
 	}
 	
-	//returns true if any column has 4 in a row
+	//returns true if any column has 4 in a row for GUI
 	private boolean checkCols(Color symbol, JLabel[][] labelArray) {
 		for(int col = 0; col < labelArray[0].length; col++) {
 			int wincount = 0;
@@ -94,6 +96,7 @@ public class Model {
 		return false;
 	}
 	
+	//returns true if diagonal has 4 shell matching for textbase
 	private boolean checkDiag(char symbol) {
 		for(int row = 3; row < body.length; row++){
 			for(int col = 0; col < body[0].length - 3; col++){
@@ -105,7 +108,6 @@ public class Model {
 				}
 			}
 		}
-		
 		for(int row = 0; row < body.length - 3; row++){
 			for(int col = 0; col < body[0].length - 3; col++){
 				if (body[row][col] == symbol   && 
@@ -119,6 +121,7 @@ public class Model {
 		return false;
 	}
 	
+	//returns true if diagonal has 4 shell matching for GUI
 	private boolean checkDiag(Color symbol, JLabel[][] labelArray) {
 		for(int row = 3; row < labelArray.length; row++){
 			for(int col = 0; col < labelArray[0].length - 3; col++){
@@ -130,7 +133,6 @@ public class Model {
 				}
 			}
 		}
-		
 		for(int row = 0; row < labelArray.length - 3; row++){
 			for(int col = 0; col < labelArray[0].length - 3; col++){
 				if (labelArray[row][col].getBackground() == symbol   && 
@@ -144,10 +146,12 @@ public class Model {
 		return false;
 	}
 	
+	//checks if the player wins for textbase
 	public boolean checkWin(char symbol) {
 		return (checkRows(symbol) || checkCols(symbol) || checkDiag(symbol));
 	}
 	
+	//check if the board is full for GUI
 	public boolean isFull(JLabel[][] labelArray) {
 		for (int i = 0; i < labelArray.length; i++) {
 			for (int j = 0; j < labelArray[i].length; j++) {
@@ -160,6 +164,7 @@ public class Model {
 		
 	}
 	
+	//checks if the player wins for GUI
 	public boolean checkWin(Color symbol, JLabel[][] labelArray) {
 		return (checkRows(symbol, labelArray) || checkCols(symbol, labelArray) || checkDiag(symbol, labelArray));
 	}
