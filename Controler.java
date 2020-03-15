@@ -3,6 +3,7 @@ import java.util.Scanner;
 public class Controler {
 	public static char turnP = 'R';
 	public static Model m;
+	static int turncounter = 0;
 
 	static boolean done = false;
 
@@ -15,7 +16,7 @@ public class Controler {
 			System.out.println(symbol + " Turn");
 			System.out.println("Which column do you wish to drop into?");
 			grid.print();
-			//System.out.print("");
+			System.out.println();
 			int col = scan.nextInt();
 			if(m.add(symbol, col)) {
 				done = true;
@@ -32,7 +33,7 @@ public class Controler {
 		int boardIn = scan.nextInt();
 		if (boardIn == 1) run();
 		if (boardIn == 2) GUIBase();
-		if (boardIn >2 || boardIn < 1) System.out.println("Incorrect choice");
+		if (boardIn >2 || boardIn < 1) System.out.println("Incorrect choice\nRun the program again");
 	}
 
 	private static void GUIBase() {
@@ -42,7 +43,7 @@ public class Controler {
 	public static void run() {
 		Grid grid = new Grid();
 		m = new Model(grid);
-		while(!done) {			
+		while(!done && turncounter < 42) {			
 			if (turnP == 'R') {			
 				turn(turnP, grid);
 				if(m.checkWin(turnP)) {
@@ -51,6 +52,7 @@ public class Controler {
 					done = true;
 				}
 				turnP = 'Y';
+				turncounter++;
 			}
 			else {
 				turn(turnP, grid);
@@ -60,6 +62,7 @@ public class Controler {
 					done = true;
 				}
 				turnP = 'R';
+				turncounter++;
 			}
 		}
 	}
